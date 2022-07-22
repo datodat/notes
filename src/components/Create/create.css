@@ -1,0 +1,15 @@
+.create {
+  padding-left: 100px;
+}
+
+@media screen and (max-width: 600px) {
+  .create {
+    padding-left: 50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .create {
+    padding-left: 30px;
+  }
+}

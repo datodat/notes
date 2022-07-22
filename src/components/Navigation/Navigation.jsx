@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import './navigation.css';
 
 const Navigation = () => {
-  const [opened, setOpened] = useState(true);
+  const [opened, setOpened] = useState(false);
 
   return (
     <nav className={opened ? 'navbar' : 'navbar hidden'}>
