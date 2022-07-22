@@ -2,38 +2,47 @@ import { useState } from 'react';
 import {TextField, Button, Typography} from '@mui/material';
 import './create.css';
 
-const Create = ({ handleCreate }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('')
-  const [nameError, setNameError] = useState(false);
-  const [descriptionError, setDescriptionError] = useState(false);
+const Create = ({ handleCreate, notes }) => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('')
+  const [titleError, setTitleError] = useState(false);
+  const [contentError, setContentError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   
   const handleSubmit = e => {
     e.preventDefault();
-    setNameError(false);
-    setDescriptionError(false);
+    setTitleError(false);
+    setContentError(false);
+    setErrorMessage('');
 
-    if(!name){
-      setNameError(true);
+    if(!title){
+      setTitleError(true);
     }
-    if(!description){
-      setDescriptionError(true);
+    if(!content){
+      setContentError(true);
     }
 
-    if(name && description){
-      const obj = {
-        name,
-        description
+    if(title && content){
+      if(notes) {
+        if(notes.find(i => i.title === title)){
+          setErrorMessage('* This note is already added');
+          setTitleError(true);
+        }else{
+          const obj = {
+            title,
+            content
+          }
+          handleCreate(obj);
+          setTitle('');
+          setContent('');
+        }
       }
-      handleCreate(obj);
-      setName('');
-      setDescription('');
     }
   }
 
   const reset = () => {
-    setName('');
-    setDescription('');
+    setTitle('');
+    setContent('');
   }
 
   return (
@@ -43,31 +52,32 @@ const Create = ({ handleCreate }) => {
         color='textPrimary'
         gutterBottom
       >
-        create note
+        Create Note
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField 
-          onChange={({target}) => setName(target.value)}
-          value={name}
+          onChange={({target}) => setTitle(target.value)}
+          value={title}
           type='text'
-          label='name'
+          label='Title'
           variant='filled' 
           fullWidth
           margin='normal'
-          error={nameError}
+          error={titleError}
+          helperText={errorMessage}
         />
         <br />
         <TextField 
-          onChange={({target}) => setDescription(target.value)}
-          value={description}
+          onChange={({target}) => setContent(target.value)}
+          value={content}
           type='text' 
-          label='description' 
+          label='Content' 
           variant='filled' 
           fullWidth
           margin='normal'
           multiline
           rows={4}
-          error={descriptionError}
+          error={contentError}
         />
         <br />
         <Button 

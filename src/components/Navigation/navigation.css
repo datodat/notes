@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 30%;
+  width: 50%;
   height: 100vh;
   background-color: #eee;
   box-shadow: 1px 0px 10px 0px rgba(0, 0, 0, 0.5);
@@ -12,17 +12,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: ease-out 0.3s;
 }
 .hidden {
-  left: -25% !important;
+  width: 15px;
 
-  align-items: flex-end;
+  align-items: center;
 }
 
 .navbar i {
   font-size: 25px;
-  color: #000;
+  color: #414141;
   cursor: pointer;
+  transition: 0.2s;
+}
+.navbar i:hover {
+  color: #000000;
 }
 
 .navbar div {
