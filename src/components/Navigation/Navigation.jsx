@@ -8,8 +8,14 @@ const Navigation = () => {
   return (
     <nav className={opened ? 'navbar' : 'navbar hidden'}>
       {opened ?
-          <i onClick={() => setOpened(!opened)} className="fa-solid fa-angle-left"></i> :
-          <i onClick={() => setOpened(!opened)} className="fa-solid fa-angle-right"></i>
+          <i 
+            onClick={() => setOpened(!opened)} 
+            className="fa-solid fa-angle-left"
+          ></i> :
+          <i 
+            onClick={() => setOpened(!opened)} 
+            className="fa-solid fa-angle-right"
+          ></i>
       }
       <div style={{ display: opened ? 'flex' : 'none'}}>
         <NavLink onClick={() => setOpened(false)} to="/">
@@ -17,9 +23,6 @@ const Navigation = () => {
         </NavLink>  
         <NavLink onClick={() => setOpened(false)} to="/create">
           create
-        </NavLink>  
-        <NavLink onClick={() => setOpened(false)} to="/about">
-          about
         </NavLink>
       </div>
     </nav>

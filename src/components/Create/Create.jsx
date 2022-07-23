@@ -1,36 +1,53 @@
 import { useState } from 'react';
-import {TextField, Button, Typography} from '@mui/material';
+import {
+  TextField, 
+  Button, 
+  Typography, 
+  RadioGroup, 
+  Radio, 
+  FormControlLabel, 
+  FormControl, 
+  FormLabel} from '@mui/material';
 import './create.css';
 
 const Create = ({ handleCreate, notes }) => {
+  // Note title
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('')
+  // Note content
+  const [content, setContent] = useState('');
+  // Note category
+  const [category, setCategory] = useState('reminders');
+  // Error if input is empty on submit
   const [titleError, setTitleError] = useState(false);
   const [contentError, setContentError] = useState(false);
+  // Error message
   const [errorMessage, setErrorMessage] = useState('');
   
   const handleSubmit = e => {
     e.preventDefault();
+    // Resetting errors on submit
     setTitleError(false);
     setContentError(false);
     setErrorMessage('');
-
+    // Checking title
     if(!title){
       setTitleError(true);
     }
+    // Checkig content
     if(!content){
       setContentError(true);
     }
 
     if(title && content){
       if(notes) {
-        if(notes.find(i => i.title === title)){
+        if(notes.find(i => i.title === title.trim())){
           setErrorMessage('* This note is already added');
           setTitleError(true);
         }else{
           const obj = {
-            title,
-            content
+            title: title.trim(),
+            content: content.trim(),
+            category
           }
           handleCreate(obj);
           setTitle('');
@@ -40,9 +57,11 @@ const Create = ({ handleCreate, notes }) => {
     }
   }
 
+  // Reset button
   const reset = () => {
     setTitle('');
     setContent('');
+    setCategory('reminders');
   }
 
   return (
@@ -80,6 +99,19 @@ const Create = ({ handleCreate, notes }) => {
           error={contentError}
         />
         <br />
+        <FormControl>
+          <FormLabel>Note Category</FormLabel>
+          <RadioGroup 
+            value={category} 
+            onChange={({target}) => setCategory(target.value)}
+          >
+            <FormControlLabel value='reminders' control={<Radio />} label='Reminders' />
+            <FormControlLabel value='todos' control={<Radio />} label='Todos' />
+            <FormControlLabel value='work' control={<Radio />} label='Work' />
+            <FormControlLabel value='money' control={<Radio />} label='Money' />
+          </RadioGroup>
+        </FormControl>
+        <br />
         <Button 
           type='submit'
           color='success'
@@ -94,7 +126,7 @@ const Create = ({ handleCreate, notes }) => {
         </Button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Create
+export default Create;
